@@ -90,7 +90,10 @@ palava.browser.fixAudio = (videoWrapper) ->
 if palava.browser.isMozilla()
   palava.browser.attachMediaStream = (element, stream) ->
     if stream
-      $(element).prop 'mozSrcObject',  stream
+      if typeof stream is 'MediaStream'
+        $(element).prop 'mozSrcObject',  stream
+      else
+        $(element).prop 'mozSrcObject',  stream
     else
       $(element).each (key, el) -> el.pause()
       $(element).prop 'mozSrcObject', null
@@ -98,7 +101,10 @@ if palava.browser.isMozilla()
 else if palava.browser.isChrome()
   palava.browser.attachMediaStream = (element, stream) ->
     if stream
-      $(element).prop 'src',  URL.createObjectURL stream
+      if typeof stream is 'MediaStream'
+        $(element).prop 'mozSrcObject',  stream
+      else
+        $(element).prop 'src',  URL.createObjectURL stream
     else
       $(element).each (key, el) -> el.pause()
       $(element).prop 'src', null
